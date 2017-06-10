@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>project01</title>
+	<style>
+		#dest1 {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			border: 1px solid black;
+			left: 500px;
+			top: 500px;
+		}
+		#dest2 {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			border: 1px solid green;
+			left: 300px;
+			top: 500px;
+		}
+		#orig {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			background-color: red;
+			border-left: 10px solid black;
+		}
+
+		#orig2 {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			left:200px;
+			background-color: blue;
+			border-left: 10px solid black;
+		}
+
+	</style>
+	<script src="jquery-1.11.1.js"></script>
+	<script src="jquery.easing.1.3.js"></script>
+	<script src="jQueryRotate.js"></script>
+	<script src="jQ-sp1-1.11.1.js"></script>
+	<script>
+		$(function () {
+			var destP = {"left":300, "top":500};
+			var origP = {"left":$("#orig").position().left, "top":$("#orig").position().top};
+
+			var destP2 = {"left":500, "top":500};
+			var origP2 = {"left":$("#orig2").position().left, "top":$("#orig2").position().top};
+
+			$("#orig").on("mousedown", function(event) {
+				event = event || window.event;
+				var pageY = event.pageY || scroll().top + event.clientY;
+				var pageX = event.pageX || scroll().left + event.clientX;
+				//记录点击的时候鼠标相对于图片的位置
+				var origY = pageY - this.offsetTop;
+				var origX = pageX - this.offsetLeft;
+
+				console.log(origX+" "+origY);
+                
+				$(document).on("mousemove", function(event) {
+					console.log("mousemove");
+					event = event || window.event;
+					var newpageX = event.pageX || scroll().left + event.clientX;
+					var newpageY = event.pageY || scroll().top + event.clientY;
+					// console.log(pageX+" "+pageY);
+
+					var targetY = newpageY - origY;
+					var targetX = newpageX - origX;
+					if (targetY<0) {
+						targetY = 0;
+					}
+					if (targetX<0) {
+						targetX = 0;
+					}
+					var target = {"left":targetX, "top":targetY};
+					// console.log(target);
+	
+					// animate($("#orig")[0],target);
+					$("#orig").css(target);
+				})
+				
+				var count = 0;
+				$(document).on("keyup", function(event) {	
+					if(event.keyCode === 32) {
+						count++;
+						if(count > 4) {
+							count = 1;
+							$("#orig").rotate(0);
+						}
+						$("#orig").rotate({animateTo:90*count});
+					}
+				})
+				
+			})
+
+			$("#orig2").on("mousedown", function(event) {
+				event = event || window.event;
+				var pageY = event.pageY || scroll().top + event.clientY;
+				var pageX = event.pageX || scroll().left + event.clientX;
+				//记录点击的时候鼠标相对于图片的位置
+				var origY2 = pageY - this.offsetTop;
+				var origX2 = pageX - this.offsetLeft;
+
+				console.log(origX2+" "+origY2);
+                
+				$(document).on("mousemove", function(event) {
+					console.log("mousemove2");
+					event = event || window.event;
+					var newpageX = event.pageX || scroll().left + event.clientX;
+					var newpageY = event.pageY || scroll().top + event.clientY;
+					// console.log(pageX+" "+pageY);
+
+					var targetY = newpageY - origY2;
+					var targetX = newpageX - origX2;
+					if (targetY<0) {
+						targetY = 0;
+					}
+					if (targetX<0) {
+						targetX = 0;
+					}
+					var target = {"left":targetX, "top":targetY};
+					// console.log(target);
+	
+					// animate($("#orig")[0],target);
+					$("#orig2").css(target);
+				})
+				
+				var count = 0;
+				$(document).on("keyup", function(event) {	
+					if(event.keyCode === 32) {
+						count++;
+						if(count > 4) {
+							count = 1;
+							$("#orig2").rotate(0);
+						}
+						$("#orig2").rotate({animateTo:90*count});
+					}
+				})
+				
+			})
+
+			$(document).on("mouseup",  function () {
+				
+				$(document).off("mousemove");
+
+				console.log("1="+$("#orig").position().left);
+				if((Math.abs($("#orig").position().left - destP["left"]) < 50)&& (Math.abs($("#orig").position().top - destP["top"]) < 50)) {
+					$("#orig").animate(destP, 1000, "easeOutQuart");
+					$(document).off("keyup");
+
+				}
+				else {
+					$("#orig").animate(origP, 1000, "easeOutQuart");
+					$("#orig").rotate({animateTo:0});
+					$(document).off("keyup");
+				}
+				console.log("2="+$("#orig2").position().left);
+
+				if((Math.abs($("#orig2").position().left - destP2["left"]) < 50)&& (Math.abs($("#orig2").position().top - destP2["top"]) < 50)) {
+					$("#orig2").animate(destP2, 1000, "easeOutQuart");
+					$(document).off("keyup");
+				}
+				else {
+					$("#orig2").animate(origP2, 1000, "easeOutQuart");
+					$("#orig2").rotate({animateTo:0});
+					$(document).off("keyup");
+				}
+				
+			})
+		})
+	</script>
+
+</head>
+<body>
+	<button>move</button>
+	
+	<div id="dest1"></div>
+	<div id="dest2"></div>
+	<div id="orig2"></div>
+	<div id="orig"></div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>project01</title>
+	<style>
+		.orig {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			border: 1px solid red;
+			box-sizing: border-box;
+			
+			float: left;
+		}
+		img {
+			width: 100%;
+			height: 100%;
+		}
+		.dest {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			border: 1px solid black;
+			box-sizing: border-box;
+			z-index: -1;
+
+			float: left;
+		}
+
+		.oWrap {
+			width: 900px;
+			height: 100px;
+			margin: 0 auto;
+			border: 1px solid #000;
+			position: relative;
+		}
+
+		.dWrap {
+			width: 300px;
+			height: 300px;
+			margin: 10px auto;
+			border: 1px solid #000;
+			position: relative;
+		}
+
+	</style>
+	<script src="jquery-1.11.1.js"></script>
+	<script src="jquery.easing.1.3.js"></script>
+	<script src="jQueryRotate.js"></script>
+	<script src="jQ-sp1-1.11.1.js"></script>
+	<script>
+		$(function () {
+			console.log($(".orig").eq(0).offset());
+			console.log($(".orig").eq(1).offset());
+			console.log($(".dest").eq(0).position());
+			console.log($(".dest").eq(1).offset());
+
+			var origP = [{"top":0, "left":0},{"top":0, "left":100}];
+			var destP = [{"left":0, "top":0},{"left":100, "top":0}];
+
+			$(".orig").eq(0).css(origP[0]);
+			$(".orig").eq(1).css(origP[1]);
+
+			$(".dest").eq(0).css(destP[0]);
+			$(".dest").eq(1).css(destP[1]);
+
+			bindMove(0);
+			bindMove(1);
+			bindStop(0);
+			bindStop(1);
+
+			function bindStop(num) {
+				$(document).on("mouseup",  function () {
+				
+					$(document).off("mousemove");
+
+					var realLeft = $(".orig").eq(num).offset().left;
+					var realTop = $(".orig").eq(num).offset().top;
+					var realRot = $(".orig").eq(num).getRotateAngle()[0];
+
+					var destLeft = $(".dest").eq(num).offset().left;
+					var destTop = $(".dest").eq(num).offset().left;
+					var destRot = $(".dest img").getRotateAngle()[0];
+					
+					if((Math.abs(realLeft - destLeft) < 50) 
+						&& (Math.abs(realTop - destTop) < 50) 
+						&& (Math.abs(realRot - destRot) < 5)) 
+						{
+						$(".orig").eq(num).animate(destP[num], 1000, "easeOutQuart");
+						$(document).off("keyup");
+					}
+					else {
+						$(".orig").eq(num).animate(origP[num], 1000, "easeOutQuart");
+						$(".orig").eq(num).rotate({animateTo:0});
+						$(document).off("keyup");
+					}
+					
+				})
+			}
+
+			function bindMove(num) {
+				$(".orig").eq(num).on("mousedown", function(event) {
+					event = event || window.event;
+					var pageY = event.pageY || scroll().top + event.clientY;
+					var pageX = event.pageX || scroll().left + event.clientX;
+					//记录点击的时候鼠标相对于图片的位置
+					var origY = pageY - this.offsetTop;
+					var origX = pageX - this.offsetLeft;
+
+					// console.log(origX+" "+origY);
+
+					$(document).on("mousemove", function(event) {
+						event = event || window.event;
+						var newpageX = event.pageX || scroll().left + event.clientX;
+						var newpageY = event.pageY || scroll().top + event.clientY;
+						// console.log(pageX+" "+pageY);
+
+						var targetY = newpageY - origY;
+						var targetX = newpageX - origX;
+						// if (targetY<0) {
+						// 	targetY = 0;
+						// }
+						// if (targetX<0) {
+						// 	targetX = 0;
+						// }
+						var target = {"left":targetX, "top":targetY};
+						// console.log(target);
+		
+						// animate($(".orig")[0],target);
+						$(".orig").eq(num).css(target);
+					})
+					
+					//改变图片方向
+					var count = 0;
+					$(document).on("keyup", function(event) {	
+						if(event.keyCode === 32) {
+							count++;
+							if(count > 4) {
+								count = 1;
+								$(".orig").eq(num).rotate(0);
+							}
+							$(".orig").eq(num).rotate({animateTo:90*count});
+						}
+					})
+					
+				})
+			}
+		})
+
+		$(function() {
+			var ran = Math.floor(Math.random()*4);
+			$(".dest img").rotate(90*ran);
+			// console.log($(".dest img").getRotateAngle());
+			
+
+		})
+	</script>
+
+</head>
+<body>
+	<div class="oWrap">
+		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+	</div>
+	<div class="dWrap">
+		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+	</div>
+</body>
+</html>

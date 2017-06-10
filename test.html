@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<style>
+		html, body {
+			height: 100%;
+		}
+
+		.outer {
+			width: 500px;
+			height: 500px;
+			border: 1px solid #000;
+		}
+		.inner {
+			width: 100px;
+			height: 100px;
+			background-color: lightblue;
+			position: absolute;
+		}
+
+		.box2 {
+			position: relative;
+			transform: translate(500px, -500px);
+		}
+	</style>
+	<script src="jquery-1.11.1.js"></script>
+	<script>
+		$(function() {
+			$(".inner").eq(0).on("mousedown", function(event) {
+				event = event || window.event;
+				var pageY = event.pageY || scroll().top + event.clientY;
+				var pageX = event.pageX || scroll().left + event.clientX;
+
+				var origY = pageY - this.offsetTop;
+				var origX = pageX - this.offsetLeft;
+
+				$(document).on("mousemove", function(event) {
+						event = event || window.event;
+						var newpageX = event.pageX || scroll().left + event.clientX;
+						var newpageY = event.pageY || scroll().top + event.clientY;
+
+						var targetY = newpageY - origY;
+						var targetX = newpageX - origX;
+						if (targetY<0) {
+							targetY = 0;
+						}
+						if (targetX<0) {
+							targetX = 0;
+						}
+						var target = {"left":targetX, "top":targetY};
+		
+						$(".inner").eq(0).css(target);
+					})
+
+			})
+
+			console.log($(".inner").eq(1).position().left);
+			console.log($(".inner").eq(1).offset().left);
+
+		})
+	</script>
+</head>
+<body>
+	<div class="outer box1">
+		<div class="inner"></div>
+	</div>
+	<div class="outer box2">
+		<div class="inner"></div>
+	</div>
+</body>
+</html>
