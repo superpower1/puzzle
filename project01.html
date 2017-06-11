@@ -23,8 +23,7 @@
 			position: absolute;
 			border: 1px solid black;
 			box-sizing: border-box;
-			z-index: -1;
-
+			
 			float: left;
 		}
 
@@ -32,7 +31,8 @@
 			width: 900px;
 			height: 100px;
 			margin: 0 auto;
-			border: 1px solid #000;
+			/*border: 1px solid #000;*/
+			background-color: lightblue;
 			position: relative;
 		}
 
@@ -40,8 +40,10 @@
 			width: 300px;
 			height: 300px;
 			margin: 10px auto;
-			border: 1px solid #000;
+			/*border: 1px solid #000;*/
+			background-color: pink;
 			position: relative;
+			z-index: -1;
 		}
 
 	</style>
@@ -51,24 +53,42 @@
 	<script src="jQ-sp1-1.11.1.js"></script>
 	<script>
 		$(function () {
-			console.log($(".orig").eq(0).offset());
-			console.log($(".orig").eq(1).offset());
-			console.log($(".dest").eq(0).position());
-			console.log($(".dest").eq(1).offset());
+			// console.log($(".orig").eq(0).offset());
+			// console.log($(".orig").eq(1).offset());
+			// console.log($(".dest").eq(0).position());
+			// console.log($(".dest").eq(1).offset());
 
-			var origP = [{"top":0, "left":0},{"top":0, "left":100}];
-			var destP = [{"left":0, "top":0},{"left":100, "top":0}];
+			var origP = [{"top":0, "left":0},
+						 {"top":0, "left":100},
+						 {"top":0, "left":200},
+						 {"top":0, "left":300},
+						 {"top":0, "left":400},
+						 {"top":0, "left":500},
+						 {"top":0, "left":600},
+						 {"top":0, "left":700},
+						 {"top":0, "left":800},
+						 ];
+			var destP = [{"top":0, "left":0},
+						 {"top":0, "left":100},
+						 {"top":0, "left":200},
+						 {"top":100, "left":0},
+						 {"top":100, "left":100},
+						 {"top":100, "left":200},
+						 {"top":200, "left":0},
+						 {"top":200, "left":100},
+						 {"top":200, "left":200},
+						 ];
 
-			$(".orig").eq(0).css(origP[0]);
-			$(".orig").eq(1).css(origP[1]);
+			for (var i = 0; i < $(".orig").length; i++) {
+				init(i);
+			}
 
-			$(".dest").eq(0).css(destP[0]);
-			$(".dest").eq(1).css(destP[1]);
-
-			bindMove(0);
-			bindMove(1);
-			bindStop(0);
-			bindStop(1);
+			function init(num) {
+				$(".orig").eq(num).css(origP[num]);
+				$(".dest").eq(num).css(destP[num]);
+				bindMove(num);
+				bindStop(num);
+			}
 
 			function bindStop(num) {
 				$(document).on("mouseup",  function () {
@@ -80,16 +100,23 @@
 					var realRot = $(".orig").eq(num).getRotateAngle()[0];
 
 					var destLeft = $(".dest").eq(num).offset().left;
-					var destTop = $(".dest").eq(num).offset().left;
+					var destTop = $(".dest").eq(num).offset().top;
 					var destRot = $(".dest img").getRotateAngle()[0];
 					
 					if((Math.abs(realLeft - destLeft) < 50) 
 						&& (Math.abs(realTop - destTop) < 50) 
 						&& (Math.abs(realRot - destRot) < 5)) 
 						{
-						$(".orig").eq(num).animate(destP[num], 1000, "easeOutQuart");
+
+						// 需要获取目的地相对原父盒子的相对top和left
+						var relativeLeft = destLeft - $(".oWrap").offset().left;
+						var relativeTop = destTop - $(".oWrap").offset().top;
+						var relativeDest = {"left":relativeLeft, "top":relativeTop};
+
+						$(".orig").eq(num).animate(relativeDest, 1000, "easeOutQuart");
 						$(document).off("keyup");
 					}
+
 					else {
 						$(".orig").eq(num).animate(origP[num], 1000, "easeOutQuart");
 						$(".orig").eq(num).rotate({animateTo:0});
@@ -149,9 +176,10 @@
 		})
 
 		$(function() {
-			var ran = Math.floor(Math.random()*4);
-			$(".dest img").rotate(90*ran);
-			// console.log($(".dest img").getRotateAngle());
+			
+			// var ran = Math.floor(Math.random()*4);
+			// $(".dest img").rotate(90*ran);
+			console.log($(".dest img").getRotateAngle());
 			
 
 		})
@@ -162,8 +190,23 @@
 	<div class="oWrap">
 		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
 		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="orig"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
 	</div>
+
 	<div class="dWrap">
+		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
+		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
 		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
 		<div class="dest"><img src="../img/arrow.jpg" alt="" ondragstart="return false;"></div>
 	</div>
