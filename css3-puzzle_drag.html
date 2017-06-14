@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    body{
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+    .wrap{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+    }
+    .bigbox{
+        width: 554px;
+        height: 554px;
+        /* margin: 0 auto; */
+        margin-top: 30px;
+        margin-left: 60px;
+    }
+    .box{
+        width: 704px;
+        height: 704px;
+        /* margin-top: -704px;
+        margin-left: 800px; */
+        /* z-index: 3; */
+        position: absolute;
+        /* border: 1px solid #000; */
+        top:210px;
+        left:800px;
+    }
+/* 
+    .box img:nth-child(3n+2){
+        margin-left: -76px;
+    }
+    .box img:nth-child(3n+3){
+        margin-left: -74px;
+    }
+ */
+    .box img{
+        position: absolute;
+        /* margin-top: -74px; */
+        transition:all 2s ease-in;
+/*         border: 1px solid #000;
+        box-sizing:border-box; */
+        /* background-color: pink; */
+    }
+/*     .box img:nth-last-child(-n+3){
+        margin-top: -74px;
+    }
+    .box img:nth-child(-n+3){
+        margin-top: 0px;
+    }
+ */
+    .box2{
+        width: 704px;
+        height: 704px;
+        /* background-color: blue; */
+/*         margin-top: -704px; */
+        display:flex;
+        flex-wrap:wrap;
+        z-index: 0;
+    }
+    .box2>div:nth-child(3n+2){
+        margin-left: -70px;
+    }
+    .box2>div:nth-child(3n+3){
+        margin-left: -70px;
+    }
+
+    .box2>div{
+        margin-top: -210px;
+        /* background-color: blue; */
+        transition:all 2s ease-in;
+        z-index: 0;
+        position: relative;
+    }
+/*     .box2>div:hover{
+        z-index: 1;
+    } */
+
+    .box2>div:nth-last-child(-n+3){
+        margin-top: -210px;
+    }
+    .box2>div:nth-child(-n+3){
+        margin-top: 0px;
+    }
+
+    .box2>div:nth-child(1), 
+    .box2>div:nth-child(3),
+    .box2>div:nth-child(7),
+    .box2>div:nth-child(9)
+    {
+        width: 223px;
+        height: 223px;
+        /* background-color: red; */
+    }
+    .box2>div:nth-child(2), .box2>div:nth-child(8){
+        width: 258px;
+        height: 223px;
+    }
+    .box2>div:nth-child(4), .box2>div:nth-child(6){
+        width: 223px;
+        height: 258px;
+        /* background-color: blue; */
+    }
+    .box2>div:nth-child(5){
+        width: 258px;
+        height: 258px;
+    }
+
+    .box2>div>img{
+        position: absolute;
+        left: 0;
+        top:0;
+    }
+
+    .box3{
+        width: 565px;
+        height: 565px;
+        background-color: green;
+        background-image: url(images/bg.jpg);
+        background-size: 100% 100%;
+        
+        margin-top: -704px;
+
+    }
+
+    #pic1{
+        transform:translate(-200px, 30px) rotate(135deg);
+    }
+
+    #pic2{
+        transform:translate(-150px, 80px) rotate(305deg);
+    }
+    #pic3{
+        transform:translate(120px, 10px) rotate(205deg);
+    }
+
+    #pic4{
+        transform:translate(-100px, 130px) rotate(235deg);
+    }
+
+    #pic5{
+        transform:translate(-200px, 30px) rotate(105deg);
+    }
+    #pic6{
+        transform:translate(130px, 60px) rotate(15deg);
+    }
+
+    #pic7{
+        transform:translate(-20px, -230px) rotate(25deg);
+    }
+
+    #pic8{
+        transform:translate(-100px, -50px) rotate(-205deg);
+    }
+    #pic9{
+        transform:translate(10px, -100px) rotate(15deg);
+    }
+
+    </style>
+
+</head>
+<body>
+<div class="wrap">
+    <div class="bigbox">
+        
+        <div class="box2">
+            <div data-index-m="1"></div>
+            <div data-index-m="2"></div>
+            <div data-index-m="3"></div>
+            <div data-index-m="4"></div>
+            <div data-index-m="5"></div>
+            <div data-index-m="6"></div>
+            <div data-index-m="7"></div>
+            <div data-index-m="8"></div>
+            <div data-index-m="9"></div>
+        </div>
+        <div class="box">
+            <img id="pic1" data-index="1" draggable="true" src="images/bunny/bunny-01.png" alt=""/>
+            <img id="pic2" data-index="2" draggable="true" src="images/bunny/bunny-02.png" alt=""/>
+            <img id="pic3" data-index="3" draggable="true" src="images/bunny/bunny-03.png" alt=""/>
+            <img id="pic4" data-index="4" draggable="true" src="images/bunny/bunny-04.png" alt=""/>
+            <img id="pic5" data-index="5" draggable="true" src="images/bunny/bunny-05.png" alt=""/>
+            <img id="pic6" data-index="6" draggable="true" src="images/bunny/bunny-06.png" alt=""/>
+            <img id="pic7" data-index="7" draggable="true" src="images/bunny/bunny-07.png" alt=""/>
+            <img id="pic8" data-index="8" draggable="true" src="images/bunny/bunny-08.png" alt=""/>
+            <img id="pic9" data-index="9" draggable="true" src="images/bunny/bunny-09.png" alt=""/>
+        </div>
+        <div class="box3"></div>
+    </div>
+</div>
+        <script>
+        //临时的盒子 用于存放当前拖拽的元素
+        var temp=null;
+        //num记录临时盒子中拖拽元素的编号
+        var num=null;
+
+        // 找到拼图块
+         var puzzleP=document.querySelectorAll('.box img');
+        // 目标位置
+         var dist=document.querySelectorAll('.box2>div');
+
+        // 为拼图块分别绑定事件
+        for(var i=0;i<puzzleP.length;i++){
+            puzzleP[i].ondragstart=function(){
+            // 保存当前拖拽元素到temp中
+                temp=this;
+                // console.log(temp);
+                // temp=this.cloneNode(true);
+                // this.style.display="none";
+            //记录临时盒子中拖拽元素的编号
+                num=this.dataset.index;
+                console.log(num);
+                this.style.zIndex=2;
+            //让目标位置的方块浮于表面
+                dist[num-1].style.zIndex=1;
+                // dist[num-1].style.backgroundColor="red";
+            }
+
+            puzzleP[i].ondragend=function(){
+                dist[num-1].style.zIndex=0;
+                // dist[num-1].style.backgroundColor="";
+                this.style.zIndex=0;
+//               当拖拽结束 ，清空temp和num
+                temp=null;
+                // console.log(temp);
+                num=null;
+                //
+
+            }
+        }
+        //在目标位置的拖拽事件
+        for(var i=0;i<dist.length;i++){
+            dist[i].ondragover=function(e){
+            // 阻止拖拽的默认行为
+                e.preventDefault();
+            }
+
+            dist[i].ondrop=function(){
+                console.log('test'+this.dataset.indexM);
+            // 拖拽拼图块到对的位置
+                if(num===this.dataset.indexM){
+                    this.appendChild(temp);
+                    temp.style.transform="none";
+                }
+            }
+        }
+
+
+//         var temp=null;
+// //         给8个小盒子分别绑定拖拽事件
+//         for(var i=0;i<boxs.length;i++){
+//             boxs[i].ondragstart=function(){
+// //                保持当前拖拽的元素
+//                 temp=this;
+//                 console.log(temp);
+//             }
+
+//             boxs[i].ondragend=function(){
+// //               当拖拽结束 ，清空temp
+//                 temp=null;
+//                 console.log(temp);
+//             }
+//         }
+
+// //        目标元素的拖拽事件
+//         two.ondragover=function(e){
+// //            阻止拖拽的默认行为
+//             e.preventDefault();
+//         }
+// //        当在目标元素上松开鼠标是触发
+//         two.ondrop=function(){
+// //            将拖拽的元素追加到 two里面来
+//             this.appendChild(temp);
+//         }
+    </script>
+</body>
+</html>
